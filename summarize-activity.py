@@ -22,6 +22,7 @@ activity2category = {
     'trp': 'transport',
     'wlk': 'walk',
     'run': 'walk',
+    'cyc': 'cycle',
 }
 
 def digest_storyline():

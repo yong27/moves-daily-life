@@ -8,13 +8,15 @@ lifeblks, activities = pickle.load(open('summarized-weekdays-life.pickle'))
 activity_colors = [
     ('home', '#dfddd4'),
     ('work', '#c1b58e'),
-    ('run', '#eedbc1'),
+    ('tour', '#eedbc1'),
     ('baby', '#e59138'),
     ('hospital', '#4b92e1'),
-    ('cafe', '#4c441e'),
+    ('shopping', '#4c441e'),
     ('eat', '#003851'),
     ('transport', '#306db0'),
     ('park', '#90b090'),
+    ('cafe', '#dbeed4'),
+    ('etc', '#dbeeee'),
 ]
 
 activity_array = np.array([[actprops.get(act, 0.) for act, _ in activity_colors]
