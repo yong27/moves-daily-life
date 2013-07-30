@@ -4,12 +4,12 @@ import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.ticker import MultipleLocator
 
-lifeblks, activities = pickle.load(open('summarized-weekdays-life.pickle'))
+#lifeblks, activities = pickle.load(open('summarized-weekdays-life.pickle'))
+lifeblks, activities = pickle.load(open('summarized-weekend-life.pickle'))
 activity_colors = [
     ('home', '#dfddd4'),
     ('work', '#c1b58e'),
     ('tour', '#eedbc1'),
-    ('baby', '#e59138'),
     ('hospital', '#4b92e1'),
     ('shopping', '#4c441e'),
     ('eat', '#003851'),
@@ -28,12 +28,17 @@ y_stack = np.cumsum(activity_array, axis=0)   # a 3x10 array
 fig = plt.figure(figsize=(14, 6))
 ax1 = fig.add_subplot(111)
 
+actnames = []
+colors = []
 for i, (actname, color) in enumerate(activity_colors):
-    print color
     if i == 0:
         ax1.fill_between(x, 0, y_stack[i, :], facecolor=color, edgecolor='#707070')
     else:
         ax1.fill_between(x, y_stack[i-1, :], y_stack[i, :], facecolor=color, edgecolor='#707070')
+    actnames.append(actname)
+    colors.append(color)
+
+#ax1.legend(colors, actnames)
 
 plt.ylim(0, 1)
 plt.xlim(0, y_stack.shape[1])

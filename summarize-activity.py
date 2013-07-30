@@ -80,9 +80,11 @@ class TimeBlocksCounter(object):
         for blkstart in np.arange(secondblkstart, end_ts, self.timeunit):
             yield (blkstart, min(end_ts, blkstart + self.timeunit))
 
-    def update(self, starttime, endtime, activity):
+    def update(self, starttime, endtime, activity, week='only-weekday'):
         for blkstart, blkend in self.divide_time(starttime, endtime):
-            if not self.is_weekday(blkstart):
+            if week == 'only-weekdays' and not self.is_weekday(blkstart):
+                continue
+            if week == 'only-weekend' and not self.is_weekend(blkstart):
                 continue
             blkno = int(int((blkstart - self.timezone) / self.timeunit) % self.timeunit_a_day)
             duration = blkend - blkstart
@@ -105,6 +107,10 @@ class TimeBlocksCounter(object):
         localtime = time.localtime(ts)
         return localtime.tm_wday < 5 and localtime[:3] not in holidays
 
+    def is_weekend(self, ts):
+        localtime = time.localtime(ts)
+        return localtime.tm_wday >= 5 
+
 
 if __name__ == '__main__':
     TIMEUNIT = 300
@@ -112,7 +118,9 @@ if __name__ == '__main__':
     storyline = sorted(set(digest_storyline()), key=lambda x: (x[1], x[2], x[0]))
     timecounter = TimeBlocksCounter(TIMEUNIT, time.timezone)
     for category, starttime, endtime in storyline:
-        timecounter.update(starttime, endtime, category)
+        #timecounter.update(starttime, endtime, category, week='only-weekdays')
+        timecounter.update(starttime, endtime, category, week='only-weekend')
 
-    pickle.dump(timecounter.get_result(), open('summarized-weekdays-life.pickle', 'w'))
+    #pickle.dump(timecounter.get_result(), open('summarized-weekdays-life.pickle', 'w'))
+    pickle.dump(timecounter.get_result(), open('summarized-weekend-life.pickle', 'w'))
 
