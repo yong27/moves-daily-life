@@ -4,8 +4,9 @@ import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.ticker import MultipleLocator
 
+lifeblks, activities = pickle.load(open('summarized-life.pickle'))
 #lifeblks, activities = pickle.load(open('summarized-weekdays-life.pickle'))
-lifeblks, activities = pickle.load(open('summarized-weekend-life.pickle'))
+#lifeblks, activities = pickle.load(open('summarized-weekend-life.pickle'))
 activity_colors = [
     ('home', '#dfddd4'),
     ('work', '#c1b58e'),

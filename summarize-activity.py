@@ -118,9 +118,11 @@ if __name__ == '__main__':
     storyline = sorted(set(digest_storyline()), key=lambda x: (x[1], x[2], x[0]))
     timecounter = TimeBlocksCounter(TIMEUNIT, time.timezone)
     for category, starttime, endtime in storyline:
+        timecounter.update(starttime, endtime, category)
         #timecounter.update(starttime, endtime, category, week='only-weekdays')
-        timecounter.update(starttime, endtime, category, week='only-weekend')
+        #timecounter.update(starttime, endtime, category, week='only-weekend')
 
+    pickle.dump(timecounter.get_result(), open('summarized-life.pickle', 'w'))
     #pickle.dump(timecounter.get_result(), open('summarized-weekdays-life.pickle', 'w'))
-    pickle.dump(timecounter.get_result(), open('summarized-weekend-life.pickle', 'w'))
+    #pickle.dump(timecounter.get_result(), open('summarized-weekend-life.pickle', 'w'))
 
